@@ -1,0 +1,266 @@
+<!--<mat-progress-bar *ngIf="Loading || showLoader" color="accent" mode="query"></mat-progress-bar>-->
+
+
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+
+    <span class="dashboard-header">&nbsp;SeaBorne Trading</span>
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <ul fxLayout="row" fxLayoutGap="20px">
+        <button class="initials-header"  [matMenuTriggerFor]="menu" mat-mini-fab>{{initials}}</button>
+        <mat-menu #menu="matMenu">
+          <button (click)="logout()" mat-menu-item>
+            <span>LOGOUT</span>
+          </button>
+        </mat-menu>
+      </ul>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<div class="content dashboard" fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column"
+     fxFlexFill>
+  <div fxFlex="20" fxFlex.md="20">
+<mat-card [style.width.px]=200 [style.height.px]=100 >
+<mat-card-header>Initial Value</mat-card-header>
+  <mat-card-content [class.card-text]="initialValue">{{initialValue}}</mat-card-content>
+</mat-card>
+
+  </div>
+  <div fxFlex="20" fxFlex.md="20">
+<mat-card [style.width.px]=200 [style.height.px]=100>
+<mat-card-header>Revenue</mat-card-header>
+  <mat-card-content [class.card-text]="revenue">{{revenue}}</mat-card-content>
+</mat-card>
+
+  </div>
+  <div fxFlex="20" fxFlex.md="20">
+<mat-card [style.width.px]=200 [style.height.px]=100>
+<mat-card-header>Spent</mat-card-header>
+  <mat-card-content [class.card-text]="spent">{{spent}}</mat-card-content>
+</mat-card>
+
+  </div>
+  <div fxFlex="20" fxFlex.md="20">
+<mat-card [style.width.px]=200 [style.height.px]=100>
+<mat-card-header>Value</mat-card-header>
+  <mat-card-content [class.card-text]="value">{{value}}</mat-card-content>
+</mat-card>
+
+  </div>
+  <div fxFlex="20" fxFlex.md="20">
+<mat-card [style.width.px]=200 [style.height.px]=100>
+<mat-card-header>Profit</mat-card-header>
+  <mat-card-content [class.card-text]="profit" [style.color]="blue" >{{profit}}</mat-card-content>
+</mat-card>
+
+  </div>
+
+
+
+
+</div>
+
+<div class="content dashboard-table" fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column"
+ fxFlexFill>
+  <div fxFlex="70" fxFlex.md="70">
+<!--<mat-accordion class="example-headers-align">-->
+<!--  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>-->
+<!--    <mat-expansion-panel-header>-->
+<!--      <mat-panel-title>-->
+<!--       Your Portfolio-->
+<!--      </mat-panel-title>-->
+<!--      <mat-panel-description>-->
+<!--        Expand to see stocks in this portfolio-->
+<!--        <mat-icon>account_circle</mat-icon>-->
+<!--      </mat-panel-description>-->
+<!--    </mat-expansion-panel-header>-->
+
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+
+      <!-- Side Column -->
+      <ng-container matColumnDef="side">
+        <th mat-header-cell *matHeaderCellDef> Side </th>
+        <td mat-cell *matCellDef="let element"> {{element.side}} </td>
+      </ng-container>
+
+      <!-- Side Column -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef> State </th>
+        <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+      </ng-container>
+
+      <!-- Side Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+                          <th mat-header-cell *matHeaderCellDef>Created Date</th>
+                          <td style="cursor: pointer;"   mat-cell *matCellDef="let element">{{element.createdDate| date : 'd MMM yyyy,HH:MM'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="marketValue">
+        <th mat-header-cell *matHeaderCellDef> Market Value </th>
+        <td mat-cell *matCellDef="let element"> {{element.marketValue}} </td>
+      </ng-container>
+
+                        <ng-container matColumnDef="appId">
+                          <th mat-header-cell *matHeaderCellDef>Order</th>
+                          <td mat-cell *matCellDef="let element">
+                            <button (click)="openDialog()" mat-icon-button>
+                              <mat-icon>more_horiz</mat-icon>
+                            </button>
+                          </td>
+                        </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+<!--    <mat-action-row>-->
+<!--&lt;!&ndash;      <button mat-button color="primary" (click)="nextStep()">Next</button>&ndash;&gt;-->
+<!--      <button mat-button color="warn" (click)="deletePortfolio()">Delete</button>-->
+<!--    </mat-action-row>-->
+<!--  </mat-expansion-panel>-->
+
+<!--  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>-->
+<!--    <mat-expansion-panel-header>-->
+<!--      <mat-panel-title>-->
+<!--        Portfolio two-->
+<!--      </mat-panel-title>-->
+<!--      <mat-panel-description>-->
+<!--        Expand to see stocks in this portfolio-->
+<!--        <mat-icon>account_circle</mat-icon>-->
+<!--      </mat-panel-description>-->
+<!--    </mat-expansion-panel-header>-->
+
+
+<!--    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+<!--      &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--            The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--      &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="position">-->
+<!--        <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="name">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="weight">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="symbol">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--    </table>-->
+
+
+
+
+<!--    <mat-action-row>-->
+<!--      <button mat-button color="accent" (click)="prevStep()">Previous</button>-->
+<!--      <button mat-button color="primary" (click)="nextStep()">Next</button>-->
+<!--      <button mat-button color="warn" (click)="deletePortfolio()">Delete</button>-->
+<!--    </mat-action-row>-->
+<!--  </mat-expansion-panel>-->
+
+<!--  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>-->
+<!--    <mat-expansion-panel-header>-->
+<!--      <mat-panel-title>-->
+<!--        Portfolio three-->
+<!--      </mat-panel-title>-->
+<!--      <mat-panel-description>-->
+<!--        Expand to see stocks in this portfolio-->
+<!--        <mat-icon>account_circle</mat-icon>-->
+<!--      </mat-panel-description>-->
+<!--    </mat-expansion-panel-header>-->
+
+
+<!--    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+
+<!--      &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--            The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--      &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="position">-->
+<!--        <th mat-header-cell *matHeaderCellDef> No. </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.position}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="name">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Weight Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="weight">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Weight </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>-->
+<!--      </ng-container>-->
+
+<!--      &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--      <ng-container matColumnDef="symbol">-->
+<!--        <th mat-header-cell *matHeaderCellDef> Symbol </th>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>-->
+<!--      </ng-container>-->
+
+<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--    </table>-->
+
+
+
+
+<!--    <mat-action-row>-->
+<!--      <button mat-button color="accent" (click)="prevStep()">Previous</button>-->
+<!--      <button mat-button color="warn" (click)="deletePortfolio()">Delete</button>-->
+<!--    </mat-action-row>-->
+<!--  </mat-expansion-panel>-->
+
+<!--</mat-accordion>-->
+
+
+</div>
+</div>

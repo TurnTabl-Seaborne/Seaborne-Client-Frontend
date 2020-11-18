@@ -1,0 +1,48 @@
+
+
+
+
+<div class="container">
+  <div mat-dialog-title>
+    <p class="dialog-heading">Make an order</p>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <button (click)="onNoClick()" class="dialog-close"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <p class="form-label">Side</p>
+    <mat-form-field appearance="fill" [style.width.px]=350>
+      <mat-label>Side</mat-label>
+      <mat-select>
+        <mat-option  value="buy">
+         BUY
+        </mat-option>
+        <mat-option  value="sell">
+          SELL
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <p class="form-label">Side</p>
+    <mat-form-field appearance="fill" [style.width.px]=350>
+      <mat-label>Amount</mat-label>
+      <input name="amount"  matInput placeholder="20" type="number">
+      <mat-error><mat-icon>error</mat-icon> &nbsp;Amount is required</mat-error>
+    </mat-form-field>
+   <br>
+
+  </div>
+
+  <div mat-dialog-actions fxLayoutAlign="flex-end">
+    <mat-spinner *ngIf="loader" [diameter]="40"> </mat-spinner>
+    <div *ngIf="!loader">
+      <button (click)="onNoClick()" class="dialog-cancel" mat-button >CANCEL</button>
+      <button (click)="action()" class="dialog-approve-button" mat-button >APPROVE</button>
+    </div>
+
+  </div>
+</div>
+
+

@@ -1,0 +1,88 @@
+<mat-progress-bar *ngIf="loader" color="accent" mode="query"></mat-progress-bar>
+<div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column" fxFlexFill>
+
+  <div fxFlex="70" fxFlex.xs="70" fxFlex.sm="70" fxFlex.md="70" [hidden]="welcomePage=='register'">
+
+    <div class="login-form">
+      <p class="login-heading">Welcome,</p>
+      <p class="login-heading">Sign in to get started</p>
+      <p class="login-subheading">Don't have Account? <a class="welcome-toggle-link" (click)="gotoRegister()">Create one here</a></p>
+
+      <form [formGroup]="loginFormGroup" (submit)="login()">
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Email Address</mat-label>
+          <input name="email" formControlName="email" matInput placeholder="Email Address"
+         >
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Email Address is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Password</mat-label>
+          <input name="password" formControlName="password"  matInput type="password"
+                 placeholder="Password">
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Password is required</mat-error>
+        </mat-form-field>
+        <br>
+        <button [disabled]="loader" type="submit" class="login-btn" mat-raised-button>SIGN IN</button>
+      </form>
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+  <div fxFlex="70" fxFlex.xs="70" fxFlex.sm="70" fxFlex.md="70" [hidden]="welcomePage=='login'">
+
+    <div class="register-form">
+      <p class="login-heading">Welcome,</p>
+      <p class="login-heading">Register to get started</p>
+      <p class="login-subheading">Already have an Account? <a class="welcome-toggle-link" (click)="gotoLogin()">Login here</a></p>
+
+      <form [formGroup]="registerFormGroup" (submit)="register()">
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Full Name</mat-label>
+          <input name="name" formControlName="name" matInput placeholder="Ex. Jennifer Adams">
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Name is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Email Address</mat-label>
+          <input name="email" type="email" formControlName="email" matInput placeholder="Email Address">
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Email Address is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Password</mat-label>
+          <input name="password" formControlName="password"  matInput type="password" placeholder="password"
+                 [ngClass]="{ 'is-invalid': loader && registerDetails.password.errors }">
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Password is required</mat-error>
+          <mat-error *ngIf="loader && registerDetails.password.value.minLength != 8"><mat-icon>error</mat-icon> &nbsp;Password must be at least 8 characters</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" [style.width.px]=350>
+          <mat-label>Confirm Password</mat-label>
+          <input name="confirmPassword" formControlName="confirmPassword"  matInput type="password"
+                 [ngClass]="{ 'is-invalid': loader && registerDetails.confirmPassword.errors }" placeholder="Confirm Password">
+          <mat-error><mat-icon>error</mat-icon> &nbsp;Please confirm password</mat-error>
+          <mat-error *ngIf="registerDetails.confirmPassword.errors.mustMatch"><mat-icon>error</mat-icon> &nbsp;Passwords must match</mat-error>
+        </mat-form-field>
+        <br>
+        <button [disabled]="loader" type="submit" class="login-btn" mat-raised-button>REGISTER</button>
+      </form>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div fxFlex="30" fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" class="poster-div">
+
+  </div>
+</div>
